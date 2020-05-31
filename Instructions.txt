@@ -58,6 +58,7 @@ Simple WebView with all function example redirect on link https://youtube.com
 package com.youtubemod.app;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
