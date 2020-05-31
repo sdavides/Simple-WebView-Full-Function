@@ -126,7 +126,11 @@ public class MainActivity extends AppCompatActivity {
             finish(); //kill app no previous page open
         }
     }
-
+    
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
 
     private class Browser_Home extends WebViewClient {
         Browser_Home(){}
@@ -298,6 +302,12 @@ private void loadWebSite() {
         }
     }
 
+	No reset WebView when rotation screen:
+@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+	
 	
 	Download file apk enable: Check the url string, redirect external link in external browser,
 	and all link with "youtube.com" remain in webview except ".apk"
