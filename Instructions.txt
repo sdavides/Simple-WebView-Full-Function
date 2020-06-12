@@ -167,6 +167,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         }
+	
+	@Override
+        public void onReceivedError (WebView view, int errorCode, String description, String failingUrl){
+            if(description.contains("net::ERR")) { //check error
+                webView.loadUrl("file:///android_asset/www/404.html");
+            }
+        }
 
     }
 
@@ -210,17 +217,6 @@ public class MainActivity extends AppCompatActivity {
             this.mCustomViewCallback = paramCustomViewCallback;
             ((FrameLayout)getWindow().getDecorView()).addView(this.mCustomView, new FrameLayout.LayoutParams(-1, -1));
             getWindow().getDecorView().setSystemUiVisibility(3846 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
-	
-	@Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            if(title.contains("not available")) {   //check internet connection eng
-                webView.loadUrl("file:///android_asset/www/404.html");
-            }
-            if(title.contains("non disponibile")) {   //check internet connection italian
-                webView.loadUrl("file:///android_asset/www/404.html");
-            }
         }
 	
     }
