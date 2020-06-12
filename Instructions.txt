@@ -1,30 +1,7 @@
-###########################################################
-###########################################################
-
-
-Simple WebView with all function example redirect on link https://youtube.com
 
 
 ###########################################################
-	Create APP FROM MASTER ZIP WITH ANDROID STUDIO
-###########################################################
-
-1 unzip master file
-2 open folder "app" with android studio: file -> open -> "app"
-3 attend running process android studio
-4 Testing app with virtual device: Run -> Run 'app'
-5 Build -> Generate Signed Bundle / APK -> APK -> create your keystore -> build  
-6 File apk create in YoutubeModAPP-master\app\release\app-release.apk
-7 Enjoy
-
-
-###############################
-###############################
-###############################
-
-
-###########################################################
-	Create APP MANUAL
+	Create APP MANUAL empty activity
 ###########################################################
 1 create activity_main.xml:
 
