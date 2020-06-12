@@ -1,7 +1,7 @@
 
 
 ###########################################################
-	Create APP MANUAL empty activity
+     Create APP MANUAL empty activity Android Studio
 ###########################################################
 1 create activity_main.xml:
 
