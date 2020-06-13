@@ -32,8 +32,9 @@
 ################################################
 2 create MainActivity.java:
 
-package com.youtubemod.app;
+package it.biffco.app;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -44,6 +45,7 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -53,8 +55,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+
+    //start app
 
     WebView webView;
     ProgressBar progressBar;
@@ -62,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //start onCreate
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         webView = findViewById(R.id.webView);
         progressBar = (ProgressBar) findViewById(R.id.progress);
-
         webView.setWebViewClient(new Browser_Home());
         webView.setWebChromeClient(new ChromeClient());
         WebSettings webSettings = webView.getSettings();
@@ -87,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         loadWebSite();
 
+
+        //end onCreate
     }
 
     private void loadWebSite() {
@@ -94,15 +101,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        if(webView!= null && webView.canGoBack()){
-            webView.goBack();
-        }else{
-            //super.onBackPressed(); ? best finish() ?
-            ActivityCompat.finishAffinity(MainActivity.this);
-            android.os.Process.killProcess(android.os.Process.myPid());
-            finish(); //kill app no previous page open
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        //start override onKeyDown
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                Toast.makeText(this," indietro ", Toast.LENGTH_SHORT).show();
+                if(webView!= null && webView.canGoBack()){
+                    webView.goBack();
+                }else{
+                    ActivityCompat.finishAffinity(MainActivity.this);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    finish(); //kill app no previous page open
+                    super.onBackPressed();
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                Toast.makeText(this,"Volume + ", Toast.LENGTH_SHORT).show();
+                return false;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                Toast.makeText(this,"Volume - ", Toast.LENGTH_SHORT).show();
+                return false;
         }
+        return super.onKeyDown(keyCode, event);
+
+
+        //end override onKeyDown
     }
 
     @Override
@@ -111,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class Browser_Home extends WebViewClient {
+
+        //start WebViewClient
         Browser_Home(){}
         public void onProgressChanged(WebView view, int newProgress) {
             progressBar.setVisibility(View.VISIBLE);
@@ -135,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
-            if(url.contains("youtube.com")) { //check for internal url
+            if(url.contains("biffco.it")) { //check for internal url
                 return super.shouldOverrideUrlLoading(view, url);
             }else{
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -144,17 +170,37 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         }
-	
-	@Override
-        public void onReceivedError (WebView view, int errorCode, String description, String failingUrl){
-            if(description.contains("net::ERR")) { //check error
+
+        @Override
+        @TargetApi(Build.VERSION_CODES.M)
+        public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+            super.onReceivedError(view, request, error);
+            final Uri uri = request.getUrl();
+            handleError(view, error.getErrorCode(), error.getDescription().toString(), uri);
+        }
+
+        @SuppressWarnings("deprecation")
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            final Uri uri = Uri.parse(failingUrl);
+            handleError(view, errorCode, description, uri);
+        }
+
+        private void handleError(WebView view, int errorCode, String description, final Uri uri) {
+            final String host = uri.getHost();
+            final String scheme = uri.getScheme();
+            if(description.contains("net::ERR_NAME_NOT_RESOLVED")) { //check error
                 webView.loadUrl("file:///android_asset/www/404.html");
             }
         }
 
+
+        //end WebViewClient
     }
 
     private class ChromeClient extends WebChromeClient {
+
+        //start WebChromeClient
         private View mCustomView;
         private WebChromeClient.CustomViewCallback mCustomViewCallback;
         protected FrameLayout mFullscreenContainer;
@@ -195,8 +241,13 @@ public class MainActivity extends AppCompatActivity {
             ((FrameLayout)getWindow().getDecorView()).addView(this.mCustomView, new FrameLayout.LayoutParams(-1, -1));
             getWindow().getDecorView().setSystemUiVisibility(3846 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
-	
+
+
+        //end WebChromeClient
     }
+
+
+    //end app
 }
 
 ################################################
@@ -348,9 +399,10 @@ private void loadWebSite() {
 		
 		
 	Error Page:
-@Override
-        public void onReceivedError (WebView view, int errorCode, String description, String failingUrl){
-            if(description.contains("net::ERR")) { //check error
+private void handleError(WebView view, int errorCode, String description, final Uri uri) {
+            final String host = uri.getHost();
+            final String scheme = uri.getScheme();
+            if(description.contains("net::ERR_NAME_NOT_RESOLVED")) { //check error
                 webView.loadUrl("file:///android_asset/www/404.html");
             }
         }
