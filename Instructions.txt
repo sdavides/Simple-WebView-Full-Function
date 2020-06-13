@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
-            if(url.contains("biffco.it")) { //check for internal url
+            if(url.contains("youtube.com")) { //check for internal url
                 return super.shouldOverrideUrlLoading(view, url);
             }else{
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -326,11 +326,11 @@ Information AndroidManifest.xml:
 android:usesCleartextTraffic="true"
 
 	No Title bar APP:
-change in application: android:theme AndroidManifest.xml
+	change in application: android:theme AndroidManifest.xml
 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
 	config screen
-android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize">
 
 
 ###############################
