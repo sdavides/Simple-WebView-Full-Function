@@ -32,7 +32,7 @@
 ################################################
 2 create MainActivity.java:
 
-package it.biffco.app;
+package com.youtube.app;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
