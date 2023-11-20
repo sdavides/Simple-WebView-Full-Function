@@ -101,14 +101,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void loadWebSite() {
-        Toast.makeText(this," BiffCo TV ", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this," Youtube ", Toast.LENGTH_SHORT).show();
         webView.loadUrl("file:///android_asset/www/index.html");
     }
 
 
     @Override
         protected void onPause() {
-            Toast.makeText(this," BiffCo TV in Background ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this," Youtube in Background ", Toast.LENGTH_SHORT).show();
             super.onPause();
     }
 
